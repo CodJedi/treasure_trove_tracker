@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth import get_user_model
+from django.contrib.auth import forms as auth_forms, get_user_model
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import TreasuryUser
@@ -7,27 +7,31 @@ from .models import TreasuryUser
 
 UserModel = get_user_model()
 
-class TreasuryUserCreationForm(UserCreationForm):
-    class Meta:
-        model = User
-        fields = ['email', 'password', 'password']
+class TreasuryUserCreationForm(auth_forms.UserCreationForm):
+    user = None
+    # password = forms.CharField(widget=forms.PasswordInput())
+    class Meta(auth_forms.UserCreationForm.Meta):
+        model = UserModel
+        fields = ('first_name','last_name','email',)
 
-    def save(self, commit=True):
-        user = super(TreasuryUserCreationForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
-        if commit:
-            user.save()
-        return user
+    # def save(self, commit=True):
+    #     user = super(TreasuryUserCreationForm, self).save(commit=False)
+    #     user.set_password(self.cleaned_data["password"])
+    #     if commit:
+    #         user.save()
+    #     return user
 
-# class TreasuryUserUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = User
-#         fields = ['email', 'password', 'password']
-#
-#     def save(self, commit=True):
-#         user = super(TreasuryUserUpdateForm, self).save(commit=False)
-#         user.email = self.cleaned_data['email']
-#         if commit:
-#             user.save()
-#         return user
+class TreasuryUserUpdateForm(auth_forms.UserChangeForm):
+    # password = forms.CharField(widget=forms.PasswordInput(), required=False)
+    class Meta(auth_forms.UserChangeForm.Meta):
+        model = UserModel
+
+    # def save(self, commit=True):
+    #     user = super(TreasuryUserUpdateForm, self).save(commit=False)
+    #
+    #     if self.cleaned_data['password']:
+    #         user.set_password(self.cleaned_data['password'])
+    #     if commit:
+    #         user.save()
+    #     return user
 
