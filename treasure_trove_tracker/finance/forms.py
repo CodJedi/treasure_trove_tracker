@@ -1,6 +1,15 @@
 from django import forms
-from .models import Transaction, Category, Trades, ProfitGoal
+from .models import Transaction, Category, Trades, ProfitGoal, Post
 
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = [
+            'title',
+            'content',
+            'image',
+        ]
 class TransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction

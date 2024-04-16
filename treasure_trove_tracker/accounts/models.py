@@ -22,6 +22,9 @@ class TreasuryUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
         _('last name'),
         max_length=30,
     )
+    date_joined = models.DateTimeField(
+        _('date joined'),
+    )
     is_staff = models.BooleanField(
         default=False
     )
@@ -46,17 +49,6 @@ class Profile(models.Model):
         max_digits=10,
         decimal_places=2,
     )
-
-    first_name = models.CharField(
-        max_length=100,
-        blank=True,
-        null=True,
-    )
-    last_name = models.CharField(
-        max_length=100,
-        blank=True,
-        null=True,
-    )
     profile_pic = models.URLField(
         blank=True,
         null=True,
@@ -64,9 +56,5 @@ class Profile(models.Model):
 
     @property
     def full_name(self):
-        if self.first_name and self.last_name:
-            return f"{self.first_name} {self.last_name}"
-        else:
-            return self.first_name or self.last_name
-
+        return f"{self.user.first_name} {self.user.last_name}".strip()
 

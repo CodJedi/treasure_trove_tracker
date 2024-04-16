@@ -25,6 +25,7 @@ class TreasuryUserUpdateForm(auth_forms.UserChangeForm):
     # password = forms.CharField(widget=forms.PasswordInput(), required=False)
     class Meta(auth_forms.UserChangeForm.Meta):
         model = UserModel
+        fields = ('first_name','last_name','email',)
 
     # def save(self, commit=True):
     #     user = super(TreasuryUserUpdateForm, self).save(commit=False)

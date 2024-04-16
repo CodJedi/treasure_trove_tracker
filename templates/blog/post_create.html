@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block main_content %}
+    <div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Create Post</h3>
+                      <form action="{% url 'post_create' %}" method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </form>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

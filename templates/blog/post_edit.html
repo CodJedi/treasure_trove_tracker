@@ -2,15 +2,16 @@
 {% load crispy_forms_tags %}
 {% block main_content %}
     <div class="container my-5">
-    <h3 class="card-title text-center mb-4">Edit User</h3>
+    <h3 class="card-title text-center mb-4">Edit Post</h3>
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow-lg">
-                <img class="card-img-top" src="https://dummyimage.com/600x350/6c757d/343a40"/>
+                <img class="card-img-top" src="{{ post.image }}"/>
                 <div class="card-body">
-                      <form action="{% url 'user_profile_edit' user.pk%}" method="post">
+                      <form action="{% url 'post_edit' post.pk%}" method="post">
                         {% csrf_token %}
                         {{ form|crispy }}
+                        <!-- Edit Button -->
                         <button class="btn btn-primary" type="submit">Edit</button>
                         <!-- Go Back Button -->
                         <a class="btn btn-outline-dark ms-2" href="javascript:history.back()">Go back</a>

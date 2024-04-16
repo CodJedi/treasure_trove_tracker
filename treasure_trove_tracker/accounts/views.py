@@ -4,7 +4,7 @@ from django.contrib.auth import views as auth_views, login, logout, get_user_mod
 from django.urls import reverse_lazy
 from django.views import generic as views
 
-from treasure_trove_tracker.accounts.forms import TreasuryUserCreationForm
+from treasure_trove_tracker.accounts.forms import TreasuryUserCreationForm, TreasuryUserUpdateForm
 from treasure_trove_tracker.accounts.models import Profile
 
 UserModel = get_user_model()
@@ -28,19 +28,20 @@ def user_logout(request):
 
 class ProfileDetailView(views.DetailView):
     queryset = Profile.objects.prefetch_related('user').all()
-    template_name = 'accounts/profile.html'
+    template_name = 'accounts/profile_detail.html'
 
 class ProfileEditView(views.UpdateView):
     queryset = Profile.objects.all()
     template_name = 'accounts/profile_edit.html'
-    success_url = reverse_lazy('profile_detail')
+    form_class = TreasuryUserUpdateForm
+    # success_url = reverse_lazy('user_profile_detail')
 
     def get_object(self):
         return self.request.user
 
     def get_success_url(self):
         return reverse_lazy(
-            'profile_detail',
+            'user_profile_detail',
             kwargs={'pk': self.request.user.pk})
 
 class ProfileDeleteView(views.DeleteView):

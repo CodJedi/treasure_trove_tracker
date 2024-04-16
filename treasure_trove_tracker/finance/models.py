@@ -1,11 +1,57 @@
 from django.db import models
 from django.conf import settings
+from django.utils.text import slugify
 
 
+class Post(models.Model):
+    title = models.CharField(
+        max_length=200
+    )
+    content = models.TextField(
+        blank=True,
+    )
+    text = models.TextField(
+        blank=True,
+        null=True,
+    )
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    created_date = models.DateTimeField(
+        auto_now_add=True,
+    )
+    image = models.URLField(
+        blank=True,
+        null=True,
+    )
+
+    def __str__(self):
+        return self.title
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        related_name='comments')
+    author = models.CharField(
+        max_length=200
+    )
+    text = models.TextField(
+        blank=True,
+        null=True,
+    )
+    created_date = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    def __str__(self):
+        return self.text
+
+# Finance part of the project
 class Transaction(models.Model):
     TRANSACTION_TYPE_CHOICES = [
-        ('income', 'Income'),
-        ('expense', 'Expense'),
         ('trades', 'Trades'),
     ]
     user = models.ForeignKey(
@@ -27,7 +73,7 @@ class Transaction(models.Model):
     transaction_type = models.CharField(
         max_length=10,
         choices=TRANSACTION_TYPE_CHOICES,
-        default='expense'
+        default='trades'
     )
 
     def __str__(self):

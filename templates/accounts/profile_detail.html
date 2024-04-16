@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block main_content %}
+    <body class="d-flex flex-column">
+        <main class="flex-shrink-0">
+            <!-- Page Content-->
+            <section class="py-5">
+                <div class="container px-5 my-5">
+                    <div class="row gx-5">
+                        <div class="col-lg-3">
+                            <div class="d-flex align-items-center mt-lg-5 mb-4">
+                                <img class="img-fluid rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />
+                                <div class="ms-3">
+                                    <div class="fw-bold">{{ user.first_name}} </div>
+                                    <div class="fw-bold">{{ user.last_name}} </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-9">
+                            <!-- Post content-->
+                            <article>
+                                <!-- Post header-->
+                                <header class="mb-4">
+                                    <!-- Post title-->
+                                    <h1 class="fw-bolder mb-3">Welcome to Profile from {{ user }}!</h1>
+                                    <!-- Post meta content-->
+                                    <div class="text-muted fst-italic mb-2">January 1, 2023</div>
+                                    <!-- Post categories-->
+                                    {% if user.is_authenticated and user == user %}
+                                        <!-- Display the link to the update page -->
+                                        <a href="{% url 'user_profile_edit' profile.pk %}" class="btn btn-primary">Edit profile</a>
+                                    {% endif %}
+                                    <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
+                                    <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
+                                </header>
+                                <!-- Preview image figure-->
+                                <figure class="mb-4"><img class="img-fluid rounded" src="" alt="..." /></figure>
+                                <!-- Post content-->
+                                <section class="mb-5">
+                                    <p class="fs-5 mb-4">${{ profile.balance }}</p>
+                                </section>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </body>
+{% endblock %}
+
