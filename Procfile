@@ -1,0 +1,1 @@
+web: gunicorn treasure_trove_tracker.wsgi --log-file -

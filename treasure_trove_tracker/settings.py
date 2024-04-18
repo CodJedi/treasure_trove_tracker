@@ -26,7 +26,10 @@ SECRET_KEY = 'django-insecure-t&e722v3l_%ynl5adw$cd)exefp-ypp0k5u5*uh8k_w%zkd&z#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+]
 
 # Application definition
 
@@ -86,7 +89,15 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
+    'postgres': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres_treasure_trove_tracker',
+        'USER': 'master',
+        'PASSWORD': '123q',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    },
 }
 
 # Password validation
