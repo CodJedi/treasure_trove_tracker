@@ -14,16 +14,10 @@ class TreasuryUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
             "unique": "A user with that email already exists."
         },
     )
-    first_name = models.CharField(
-        _('first name'),
-        max_length=30,
-    )
-    last_name = models.CharField(
-        _('last name'),
-        max_length=30,
-    )
+
     date_joined = models.DateTimeField(
         _('date joined'),
+        auto_now_add=True,
     )
     is_staff = models.BooleanField(
         default=False
@@ -43,6 +37,14 @@ class Profile(models.Model):
         on_delete=models.CASCADE,
         related_name="profile",
     )
+    first_name = models.CharField(
+        _('first name'),
+        max_length=30,
+    )
+    last_name = models.CharField(
+        _('last name'),
+        max_length=30,
+    )
 
     balance = models.DecimalField(
         default=0,
@@ -56,5 +58,5 @@ class Profile(models.Model):
 
     @property
     def full_name(self):
-        return f"{self.user.first_name} {self.user.last_name}".strip()
+        return f"{self.first_name} {self.last_name}".strip()
 

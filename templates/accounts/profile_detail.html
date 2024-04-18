@@ -7,10 +7,14 @@
                 <div class="container px-5 my-5">
                     <div class="row gx-5">
                         <div class="col-lg-3">
-                            <div class="d-flex align-items-center mt-lg-5 mb-4">
-                                <img class="img-fluid rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />
-                                <div class="ms-3">
-                                    <div class="fw-bold">{{ user.first_name}} </div>
+                            <div class="flex-shrink-1  align-items-center mt-lg-5 mb-4">
+                                {% if user.profile.profile_pic %}
+                                	<img class="img-fluid rounded-circle " src="{{ user.profile.profile_pic }}" />
+                                    {% else %}
+                                    <img class="img-fluid rounded-circle " src="https://static.vecteezy.com/system/resources/thumbnails/002/387/693/small/user-profile-icon-free-vector.jpg" />
+                                {% endif %}
+                                <div class="ms-0">
+                                    <div class="fw-bold">{{ profile.full_name}} </div>
                                     <div class="fw-bold">{{ user.last_name}} </div>
                                 </div>
                             </div>
@@ -23,20 +27,50 @@
                                     <!-- Post title-->
                                     <h1 class="fw-bolder mb-3">Welcome to Profile from {{ user }}!</h1>
                                     <!-- Post meta content-->
-                                    <div class="text-muted fst-italic mb-2">January 1, 2023</div>
+                                    <div class="text-muted fst-italic mb-2">{{ user.date_joined }}</div>
                                     <!-- Post categories-->
-                                    {% if user.is_authenticated and user == user %}
+                                    {% if user.is_authenticated and user.profile == profile %}
                                         <!-- Display the link to the update page -->
-                                        <a href="{% url 'user_profile_edit' profile.pk %}" class="btn btn-primary">Edit profile</a>
+                                        <a href="{% url 'user_profile_edit' profile.pk %}" class="btn btn-primary mb-3">Edit profile</a>
                                     {% endif %}
-                                    <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
-                                    <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
+                                    <h3 class="fw-bolder ">Interests</h3>
+                                    <a class="badge bg-secondary text-decoration-none link-light" href="#!">Finance</a>
+                                    <a class="badge bg-secondary text-decoration-none link-light" href="#!">Trading</a>
                                 </header>
-                                <!-- Preview image figure-->
-                                <figure class="mb-4"><img class="img-fluid rounded" src="" alt="..." /></figure>
-                                <!-- Post content-->
                                 <section class="mb-5">
-                                    <p class="fs-5 mb-4">${{ profile.balance }}</p>
+                                    <p class="fs-5 mb-4">Account Balance ${{ profile.balance }}</p>
+                                </section>
+                                <!-- Post content-->
+                                <section class="py-5">
+                                    <div class="container px-5">
+                                        <div class="row gx-5">
+                                        <h2 class="fw-bolder fs-5 mb-4 ">All Posts</h2>
+                                            {% for post in posts %}
+                                            <div class="col-lg-4 mb-5">
+                                            <div class="card h-100 shadow border-0">
+                                                <img class="card-img-top" src="{{ post.image }}" alt="..." />
+                                                <div class="card-body p-4">
+                                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>
+                                                    <a class="text-decoration-none link-dark stretched-link" href="{% url 'post_detail' post.pk %}"><div class="h5 card-title mb-3">
+                                                        {{ post.title }}</div></a>
+                                                    <p class="card-text mb-0">{{ post.content }}</p>
+                                                </div>
+                                                <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                                                    <div class="d-flex align-items-end justify-content-between">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="small">
+                                                                <div class="text-muted">{{ post.created_date }}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% empty %}
+                                            <h5>No posts available.</h5>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
                                 </section>
                             </article>
                         </div>

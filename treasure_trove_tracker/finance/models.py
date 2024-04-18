@@ -17,6 +17,7 @@ class Post(models.Model):
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        related_name='posts',
     )
     created_date = models.DateTimeField(
         auto_now_add=True,
@@ -34,13 +35,15 @@ class Comment(models.Model):
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
-        related_name='comments')
+        related_name='comments'
+    )
     author = models.CharField(
-        max_length=200
+        max_length=50
     )
     text = models.TextField(
         blank=True,
         null=True,
+        max_length=1000
     )
     created_date = models.DateTimeField(
         auto_now_add=True,
@@ -132,3 +135,27 @@ class ProfitGoal(models.Model):
     description = models.CharField(
         max_length=1000,
     )
+
+class ContactEmailMessage(models.Model):
+    theme = models.CharField(
+        max_length=255,
+        blank=False,
+        null=False,
+    )
+    email = models.EmailField(
+        max_length=255,
+        blank=False,
+        null=False,
+    )
+    message = models.TextField(
+        max_length=1000,
+        blank=False,
+        null=False,
+
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    def __str__(self):
+        return f"Email: {self.theme} from {self.email}"

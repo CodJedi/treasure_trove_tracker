@@ -6,12 +6,17 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow-lg">
-                <img class="card-img-top" src="https://dummyimage.com/600x350/6c757d/343a40"/>
+                {% if profile_pic in profile %}
+                    <img class="img-fluid rounded-circle " src="{{ user.profile.profile_pic }}" />
+                    {% else %}
+                    <img class="img-fluid rounded-circle " src="https://static.vecteezy.com/system/resources/thumbnails/002/387/693/small/user-profile-icon-free-vector.jpg" />
+                {% endif %}
                 <div class="card-body">
                       <form action="{% url 'user_profile_edit' user.pk%}" method="post">
                         {% csrf_token %}
                         {{ form|crispy }}
                         <button class="btn btn-primary" type="submit">Edit</button>
+                        <a class="btn btn-danger" href="{% url 'user_profile_delete' profile.pk %}">Delete</a>
                         <!-- Go Back Button -->
                         <a class="btn btn-outline-dark ms-2" href="javascript:history.back()">Go back</a>
                       </form>

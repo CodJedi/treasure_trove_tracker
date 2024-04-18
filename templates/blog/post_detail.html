@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% block main_content %}
+{% load crispy_forms_tags %}
+{% load static %}
     <body class="d-flex flex-column">
         <main class="flex-shrink-0">
             <!-- Page Content-->
@@ -7,8 +9,12 @@
                 <div class="container px-5 my-5">
                     <div class="row gx-5">
                         <div class="col-lg-3">
-                            <div class="d-flex align-items-center mt-lg-5 mb-4">
-                                <img class="img-fluid rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />
+                            <div class="flex-column align-items-center mt-lg-5 mb-4">
+                               {% if user.profile.profile_pic %}
+                                	<img class="img-fluid rounded-circle " src="{{ user.profile.profile_pic }}" />
+                                    {% else %}
+                                    <img class="img-fluid rounded-circle " src="https://static.vecteezy.com/system/resources/thumbnails/002/387/693/small/user-profile-icon-free-vector.jpg" />
+                                {% endif %}
                                 <div class="ms-3">
                                     <div class="fw-bold">{{ post.author }}</div>
                                     <div class="text-muted">News, Business</div>
@@ -23,7 +29,7 @@
                                     <!-- Post title-->
                                     <h1 class="fw-bolder mb-1">Welcome to Blog Post!</h1>
                                     <!-- Post meta content-->
-                                    <div class="text-muted fst-italic mb-2">January 1, 2023</div>
+                                    <div class="text-muted fst-italic mb-2">{{ post.created_date }}</div>
                                     <!-- Post categories-->
                                     {% if user.is_authenticated and user == post.author %}
                                         <!-- Display the link to the update page -->
@@ -45,40 +51,25 @@
                                 <div class="card bg-light">
                                     <div class="card-body">
                                         <!-- Comment form-->
-                                        <form class="mb-4"><textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea></form>
-                                        <!-- Comment with nested comments-->
-                                        <div class="d-flex mb-4">
-                                            <!-- Parent comment-->
-                                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                            <div class="ms-3">
-                                                <div class="fw-bold">Commenter Name</div>
-                                                If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks.
-                                                <!-- Child comment 1-->
-                                                <div class="d-flex mt-4">
-                                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                                    <div class="ms-3">
-                                                        <div class="fw-bold">Commenter Name</div>
-                                                        And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.
-                                                    </div>
-                                                </div>
-                                                <!-- Child comment 2-->
-                                                <div class="d-flex mt-4">
-                                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                                    <div class="ms-3">
-                                                        <div class="fw-bold">Commenter Name</div>
-                                                        When you put money directly to a problem, it makes a good headline.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <form method="post" class="mb-4" >
+                                            {% csrf_token %}
+                                            {{ comment_form|crispy }}
+                                            <button class="btn btn-primary" type="submit">Add Comment</button>
+                                        </form>
                                         <!-- Single comment-->
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                        {% for comment in comments %}
+                                        <div class="d-flex mb-3">
+                                        {% if comment.author.profile.profile_pic %}
+                                        	<div class="flex-shrink-0"><img class="rounded-circle" src="{{ comment.author.profile_pic }}" /></div>
+                                            {% else %}
+                                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://static.vecteezy.com/system/resources/thumbnails/002/387/693/small/user-profile-icon-free-vector.jpg" alt="..." /></div>
+                                        {% endif %}
                                             <div class="ms-3">
-                                                <div class="fw-bold">Commenter Name</div>
-                                                When I look at the universe and all the ways the universe wants to kill us, I find it hard to reconcile that with statements of beneficence.
+                                                <div class="fw-bold">Commenter: {{ comment.author }}</div>
+                                                {{ comment.text }}
                                             </div>
                                         </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </section>

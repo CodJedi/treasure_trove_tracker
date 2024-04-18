@@ -1,5 +1,7 @@
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Field
 from django import forms
-from .models import Transaction, Category, Trades, ProfitGoal, Post
+from .models import Transaction, Category, Trades, ProfitGoal, Post, Comment, ContactEmailMessage
 
 
 class PostForm(forms.ModelForm):
@@ -10,6 +12,17 @@ class PostForm(forms.ModelForm):
             'content',
             'image',
         ]
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']
+        labels = {
+            'text': 'Join the conversation',
+        }
+        widgets = {
+            'text': forms.Textarea(attrs={'rows': 4, 'cols': 40}),
+        }
+
 class TransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction
@@ -37,4 +50,11 @@ class ProfitGoalForm(forms.ModelForm):
             'target_amount',
 
         ]
+
+# forms.py
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = ContactEmailMessage
+        fields = ['theme', 'email', 'message']
+
 

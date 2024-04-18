@@ -1,15 +1,4 @@
 @charset "UTF-8";
-/*!
-* Start Bootstrap - Modern Business v5.0.7 (https://startbootstrap.com/template-overviews/modern-business)
-* Copyright 2013-2023 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-modern-business/blob/master/LICENSE)
-*/
-/*!
- * Bootstrap  v5.2.3 (https://getbootstrap.com/)
- * Copyright 2011-2022 The Bootstrap Authors
- * Copyright 2011-2022 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- */
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -10845,4 +10834,10 @@ html {
   background-position: center;
   background-repeat: no-repeat;
   min-height: 15rem;
+}
+/*Crispy Comment Form*/
+.textarea-max-size textarea
+{
+    max-width: 100%;  /* or set to a specific pixel width if preferred */
+    max-height: 200px; /* Adjust the height as needed */
 }

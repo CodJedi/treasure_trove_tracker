@@ -2,8 +2,7 @@ from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import TreasuryUser
-
+from .models import TreasuryUser, Profile
 
 UserModel = get_user_model()
 
@@ -12,7 +11,7 @@ class TreasuryUserCreationForm(auth_forms.UserCreationForm):
     # password = forms.CharField(widget=forms.PasswordInput())
     class Meta(auth_forms.UserCreationForm.Meta):
         model = UserModel
-        fields = ('first_name','last_name','email',)
+        fields = ('email',)
 
     # def save(self, commit=True):
     #     user = super(TreasuryUserCreationForm, self).save(commit=False)
@@ -24,8 +23,8 @@ class TreasuryUserCreationForm(auth_forms.UserCreationForm):
 class TreasuryUserUpdateForm(auth_forms.UserChangeForm):
     # password = forms.CharField(widget=forms.PasswordInput(), required=False)
     class Meta(auth_forms.UserChangeForm.Meta):
-        model = UserModel
-        fields = ('first_name','last_name','email',)
+        model = Profile
+        fields = ('first_name', 'last_name', 'profile_pic', 'balance')
 
     # def save(self, commit=True):
     #     user = super(TreasuryUserUpdateForm, self).save(commit=False)

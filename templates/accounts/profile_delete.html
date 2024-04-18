@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block main_content %}
+<div class="container my-5">
+    <h3 class="card-title text-center mb-4">Delete Profile</h3>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <img class="card-img-top" src="{{ profile.profile_pic }}"/>
+                <div class="card-body">
+                  <form action="{% url 'user_profile_delete' profile.pk %}" method="post">
+                    {% csrf_token %}
+                      <div>
+                       <div class="h5 card-title mb-3">{{ profile.full_name }}</div></a>
+                                <p class="card-text mb-0">{{ user.email }}</p>
+                      </div>
+                      <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                                <div class="d-flex align-items-end justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <!-- Delete Button -->
+                                        <button class="btn btn-danger" type="submit">Delete</button>
+                                        <!-- Go Back Button -->
+                                        <a class="btn btn-primary ms-2" href="javascript:history.back()">Go back</a>
+                                    </div>
+                              </div>
+                        </div>
+                  </form>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

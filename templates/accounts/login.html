@@ -1,22 +1,15 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% block main_content %}
-
-
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow-lg">
                 <div class="card-body">
                     <h3 class="card-title text-center mb-4">Login</h3>
-
                     <form action="{% url 'user_login' %}" method="post">
                         {% csrf_token %}
                         {{ form|crispy }}
-{#                            {{ form.email|as_crispy_field }}#}
-{#                            {{ form.first_name|as_crispy_field }}#}
-{#                            {{ form.last_name|as_crispy_field }}#}
-{#                            {{ form.password|as_crispy_field }}#}
                         <!-- Submit button -->
                         <button type="submit" class="btn btn-primary w-100">Sign Up</button>
                     </form>
